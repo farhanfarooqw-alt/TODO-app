@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 
 // === Supabase credentials (from your message) ===
 const supabaseUrl = 'https://flqjilnjzpdfpkpwwiqr.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..YQT__qYIWQ2SiFYh9_k1guCdvBp0vIxPgwbPM6qDsEc';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxhcm1ubW5pYWZjcGxid3RlemJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgyODcxNDgsImV4cCI6MjA4Mzg2MzE0OH0.lUA9eHx-cBs8ch827t_wzI310-85wXT2wxIZ0L3MTVw';
 
 // IMPORTANT: This looks like an invalid/incomplete key
 // Make sure you're using your REAL anon key (it should be much longer)
