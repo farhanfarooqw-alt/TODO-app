@@ -3,19 +3,21 @@ const { createClient } = require('@supabase/supabase-js');
 
 const app = express();
 
-// Use the PORT provided by Vercel (or fallback to 3000 for local dev)
+// Use the PORT provided by Railway (or fallback to 3000 for local dev)
 const port = process.env.PORT || 3000;
 
-// === Supabase credentials (from your message) ===
-const supabaseUrl = 'https://flqjilnjzpdfpkpwwiqr.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxhcm1ubW5pYWZjcGxid3RlemJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgyODcxNDgsImV4cCI6MjA4Mzg2MzE0OH0.lUA9eHx-cBs8ch827t_wzI310-85wXT2wxIZ0L3MTVw';
+// === Supabase credentials from environment variables ===
+const supabaseUrl = process.env.SUPABASE_URL || 'https://flqjilnjzpdfpkpwwiqr.supabase.co';
+const supabaseKey = process.env.SUPABASE_KEY;
 
-// IMPORTANT: This looks like an invalid/incomplete key
-// Make sure you're using your REAL anon key (it should be much longer)
-// The correct format usually looks like:
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZscWppbG5qenBkZnBrcHd3aXFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgyOTIyOTEsImV4cCI6MjA4Mzg2ODI5MX0.YQT__qYIWQ2SiFYh9_k1guCdvBp0vIxPgwbPM6qDsEc
-// ↑↑↑ copy the full string from your Supabase dashboard → Settings → API → anon public key
+// Validate that we have the required credentials
+if (!supabaseKey) {
+  console.error('❌ SUPABASE_KEY environment variable is required!');
+  console.error('Please set it in your Railway dashboard under Variables tab');
+  process.exit(1);
+}
 
+// Initialize Supabase client
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 app.use(express.json());
@@ -142,14 +144,14 @@ app.delete('/api/tasks/:id', async (req, res) => {
 });
 
 // ────────────────────────────────────────────────
-// Vercel serverless support + local dev fallback
+// Railway/Vercel serverless support + local dev fallback
 // ────────────────────────────────────────────────
 module.exports = app;
 
 // For local development only
 if (require.main === module) {
   app.listen(port, () => {
-    console.log(`Server running → http://localhost:${port}`);
-    console.log('Make sure index.html is in the "public" folder');
+    console.log(`✅ Server running → http://localhost:${port}`);
+    console.log('📁 Make sure index.html is in the "public" folder');
   });
 }
